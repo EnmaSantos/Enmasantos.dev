@@ -1,44 +1,31 @@
-# Enmanuel De Los Santos Cruz Portfolio
+# Enmanuel De Los Santos — portfolio
 
-This is my personal software engineering portfolio, live at [enmasantos.dev](https://enmasantos.dev). It is built to give recruiters, hiring managers, and collaborators a focused view of the kind of work I like building: useful software shaped around APIs, data systems, automation, dashboards, and real operational workflows.
+The source for [enmasantos.dev](https://enmasantos.dev/), a React and TypeScript portfolio focused on web applications, operational tools, and software engineering work. The site is a static Vite app deployed through GitHub Pages.
 
-The site highlights selected projects from my GitHub profile, summarizes my current experience, maps out my technical stack, and links directly to my resume, GitHub, LinkedIn, and email. The goal is to make the first impression practical: what I build, what tools I use, and where my engineering interests are headed.
+## Run locally
 
-## What It Does
-
-- Presents a concise landing page for my software engineering and data science work.
-- Showcases full-stack, backend, data engineering, API, automation, and applied ML projects.
-- Summarizes my experience at BYU-Idaho and the Madison Fire Department.
-- Provides a quick technical stack grouped by languages, backend tools, data science, infrastructure, and deployment.
-- Publishes as a fast static site through GitHub Pages with a custom `.dev` domain.
-
-## Tech Stack
-
-- React and TypeScript for the interface.
-- Vite for local development and production builds.
-- Lucide React for icons.
-- GitHub Actions for build and deployment.
-- GitHub Pages for hosting.
-
-## Run Locally
+Use Node.js 24, then:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-## Build
+Before publishing:
 
 ```bash
 npm run build
+npm run lint
 ```
 
-## Deploy
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to GitHub Pages. The custom domain is set in `public/CNAME`.
 
-This repository deploys to GitHub Pages through the workflow in `.github/workflows/deploy.yml`. On every push to `main`, GitHub Actions installs dependencies, builds the Vite site, uploads the `dist` folder, and publishes the latest version.
+## Content maintenance
 
-Vercel is not required for this portfolio because there is no backend runtime. If you later want Vercel previews, logs, or environment management, install the CLI with:
+- Project descriptions, status labels, and links are in `src/App.tsx`.
+- Featured images are in `public/project-media/`. The VitalityVista dashboard uses representative demo data. The Kairo recording screen is a screenshot from its public repository. The VibeMatch graphic is an illustration of its interface, not a screenshot.
+- The social preview is `public/og-card.png`.
+- The downloadable PDF is `public/Enmanuel_De_Los_Santos_Resume.pdf`.
+- See `CONTENT_EVIDENCE.md` for source revisions, verified facts, and open verification items.
 
-```bash
-npm i -g vercel
-```
+When updating a project, check its current branch and implementation before changing its public claims. Keep production Coaching Audits details separate from the sanitized CoachLens repository.
