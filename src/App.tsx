@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import {
   ArrowDownRight, ArrowRight, ArrowUpRight, BriefcaseBusiness, CheckCircle2,
   Code2, Download, GitPullRequest, Heart, Layers3, Link2, Mail, Sparkles,
@@ -109,7 +110,7 @@ function VibePreview() {
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="project-card">
+    <article className={project.number === '02' ? 'project-card project-card-reversed' : 'project-card'}>
       <div className="project-visual">
         {project.image ? <a className="project-image-link" href={project.image} target="_blank" rel="noreferrer" aria-label={'View full-size ' + project.name + ' screenshot'}><img src={project.image} alt={project.imageAlt} loading="lazy" /></a> : <VibePreview />}
         <span className="media-note">{project.imageNote}</span>
@@ -130,6 +131,57 @@ function ProjectCard({ project }: { project: Project }) {
           {project.caseStudy && <a href={project.caseStudy}>View UX case study<ArrowUpRight size={16} /></a>}
           {project.live && <a href={project.live} target="_blank" rel="noreferrer">{project.liveLabel}<ArrowUpRight size={16} /></a>}
           <a href={project.repo} target="_blank" rel="noreferrer">View source<ArrowUpRight size={16} /></a>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+const vibeDesignFrames = [
+  { image: '/case-studies/vibematch/vibe-check.png', label: '01 / Preference check', alt: 'Early mobile concept with mood choices and a visible filter summary' },
+  { image: '/case-studies/vibematch/swipe.png', label: '02 / Swipe decision', alt: 'Early mobile concept with a movie card and explicit Skip and Like buttons' },
+  { image: '/case-studies/vibematch/movie-details.png', label: '03 / Movie details', alt: 'Early mobile concept showing more information about a movie' },
+  { image: '/case-studies/vibematch/match-results.png', label: '04 / Shared results', alt: 'Early mobile concept separating perfect and almost matches' },
+]
+
+function VibeMatchCaseStudy() {
+  return (
+    <article className="project-case-study" id="vibematch-case-study" aria-labelledby="vibematch-case-title">
+      <div className="project-case-heading">
+        <div>
+          <span className="section-number">02 / VIBEMATCH DESIGN DETAIL</span>
+          <h3 id="vibematch-case-title">Designing a clearer movie choice.</h3>
+        </div>
+        <p>
+          I shaped the visual direction through ongoing discussions and a mobile-first Figma pass,
+          then built the responsive interaction. These frames show the first design direction;
+          the implemented interface evolved during development.
+        </p>
+      </div>
+
+      <div className="design-frame-rail" aria-label="VibeMatch first Figma design pass">
+        {vibeDesignFrames.map((frame) => (
+          <figure className="design-frame" key={frame.image}>
+            <a href={frame.image} target="_blank" rel="noreferrer" aria-label={`View full-size ${frame.label} concept`}>
+              <img src={frame.image} alt={frame.alt} loading="lazy" />
+            </a>
+            <figcaption>{frame.label}<span>Early Figma concept</span></figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <div className="design-decisions">
+        <div><span>01 / Frame</span><h4>Show the preferences.</h4><p>The first design pass made the vibe check skippable and kept the active filters visible. The app now supports mood, genre, runtime, release-age, and animation preferences.</p></div>
+        <div><span>02 / Decide</span><h4>Make each action clear.</h4><p>Poster-first cards pair explicit Like and Skip buttons with movie details. The implemented deck also supports pointer dragging and keyboard access to details.</p></div>
+        <div><span>03 / Resolve</span><h4>Surface the shared yes.</h4><p>The result concept places shared likes ahead of near matches, so the pair can compare the strongest options first.</p></div>
+      </div>
+
+      <div className="design-case-footer">
+        <p><strong>Next step:</strong> Observe people using the flow and revise it from their feedback. Formal user interviews and usability testing have not been conducted yet.</p>
+        <div className="design-case-links">
+          <a href="https://www.figma.com/design/kJktYujehpxaF0fxFif8ia" target="_blank" rel="noreferrer">Figma design <ArrowUpRight size={16} /></a>
+          <a href="https://vibematch.enmasantos.dev/" target="_blank" rel="noreferrer">Live app <ArrowUpRight size={16} /></a>
+          <a href="https://github.com/EnmaSantos/vibematch" target="_blank" rel="noreferrer">Source code <ArrowUpRight size={16} /></a>
         </div>
       </div>
     </article>
@@ -161,99 +213,7 @@ function App() {
           </aside>
         </section>
         <section className="strengths-section" aria-labelledby="strengths-title"><div className="section-intro"><span className="section-number">01 / CAPABILITIES</span><h2 id="strengths-title">What I bring to a build</h2></div><div className="strength-grid">{strengths.map((item) => <a className="strength" href={item.href} key={item.title}><span className="strength-icon">{item.icon}</span><h3>{item.title}</h3><p>{item.text}</p><ArrowUpRight className="strength-arrow" size={17} /></a>)}</div></section>
-        <section className="content-section projects-section" id="projects" aria-labelledby="projects-title"><div className="section-intro section-intro-wide"><div><span className="section-number">02 / SELECTED WORK</span><h2 id="projects-title">Software with a purpose.</h2></div><p>Three projects that show interface design, complete application flows, and technical decisions. Each example separates what is implemented from what is still a prototype or needs further verification.</p></div><div className="projects-list">{projects.map((project) => <ProjectCard key={project.name} project={project} />)}</div><div className="more-work"><span>MORE WORK TO EXPLORE</span><a href="https://github.com/EnmaSantos/CoachLens" target="_blank" rel="noreferrer">CoachLens <small>Sanitized coaching platform source</small><ArrowUpRight size={16} /></a><a href="https://github.com/EnmaSantos/data-referee" target="_blank" rel="noreferrer">Data Referee <small>Event data quality pipeline</small><ArrowUpRight size={16} /></a></div></section>
-        <section className="case-study-section" id="vibematch-case-study" aria-labelledby="vibematch-title">
-          <div className="case-study-intro">
-            <div>
-              <div className="section-number">Selected UX case study / VibeMatch</div>
-              <h2 id="vibematch-title">Making movie night feel like a shared decision.</h2>
-            </div>
-            <p>
-              VibeMatch explores a familiar problem: two people want to watch something together, but browsing a large
-              catalog makes choosing harder. I shaped the visual direction through ongoing design discussions and a
-              mobile-first Figma pass, then built the responsive web interactions shown in the product.
-            </p>
-          </div>
-
-          <div className="case-study-facts" aria-label="Project facts">
-            <div><span>Role</span><strong>Interface direction and implementation</strong></div>
-            <div><span>Medium</span><strong>Figma concepts + responsive web app</strong></div>
-            <div><span>Focus</span><strong>Preference flow, swipe decisions, match reveal</strong></div>
-          </div>
-
-          <div className="case-study-story">
-            <div className="story-copy">
-              <span className="story-number">01 / Frame the choice</span>
-              <h3>Start with the mood, then narrow the options.</h3>
-              <p>
-                The first design pass put a skippable vibe check before the movie deck. It made preferences visible as
-                short choices and kept a current-filter summary on screen, so the user could see why a title might fit.
-                The implemented app supports mood, genre, runtime, release-age, and animation preferences.
-              </p>
-              <p className="story-caption">Initial Figma concept. The live interface evolved during implementation.</p>
-            </div>
-            <figure className="case-study-figure">
-              <img src="/case-studies/vibematch/vibe-check.png" alt="VibeMatch mobile Figma concept showing a skippable vibe check with preference chips and current filters" loading="lazy" />
-              <figcaption>Vibe check / first design pass</figcaption>
-            </figure>
-          </div>
-
-          <div className="case-study-story story-reverse">
-            <div className="story-copy">
-              <span className="story-number">02 / Make the decision clear</span>
-              <h3>Give each card a simple action and enough context.</h3>
-              <p>
-                The concept pairs poster-first cards with explicit Like and Skip buttons. In the web app, users can
-                also drag a card, open movie details from the poster, and use the keyboard to open details. A short
-                deck and visible session timer keep the interaction focused.
-              </p>
-              <p className="story-caption">Interaction details are supported by the current VibeMatch source code.</p>
-            </div>
-            <div className="case-study-pair">
-              <figure className="case-study-figure">
-                <img src="/case-studies/vibematch/swipe.png" alt="VibeMatch mobile Figma concept for the timed movie swipe screen" loading="lazy" />
-                <figcaption>Swipe / first design pass</figcaption>
-              </figure>
-              <figure className="case-study-figure">
-                <img src="/case-studies/vibematch/movie-details.png" alt="VibeMatch mobile Figma concept for movie details" loading="lazy" />
-                <figcaption>Details / first design pass</figcaption>
-              </figure>
-            </div>
-          </div>
-
-          <div className="case-study-story">
-            <div className="story-copy">
-              <span className="story-number">03 / Reveal the common ground</span>
-              <h3>End with a result the pair can act on.</h3>
-              <p>
-                The match view puts shared likes first and separates them from near matches. The concept also shows
-                how someone could adjust preferences if the round does not produce a clear choice. This is a design
-                direction. Its effect on decision time has not been measured.
-              </p>
-              <p className="story-caption">Validation so far: design discussions and implementation review. User interviews and usability testing are future work.</p>
-            </div>
-            <figure className="case-study-figure">
-              <img src="/case-studies/vibematch/match-results.png" alt="VibeMatch mobile Figma concept showing perfect and almost matches" loading="lazy" />
-              <figcaption>Match reveal / first design pass</figcaption>
-            </figure>
-          </div>
-
-          <div className="case-study-outro">
-            <div>
-              <span className="story-number">What this work shows</span>
-              <p>
-                I can translate an interaction idea into a visual flow and working interface. The next useful step is
-                to observe a few people using it, record where they hesitate, and revise the flow from that feedback.
-              </p>
-            </div>
-            <div className="case-study-actions">
-              <a href="https://www.figma.com/design/kJktYujehpxaF0fxFif8ia" target="_blank" rel="noreferrer">View Figma design <ArrowUpRight size={16} aria-hidden="true" /></a>
-              <a href="https://vibematch.enmasantos.dev/" target="_blank" rel="noreferrer">Open VibeMatch <ArrowUpRight size={16} aria-hidden="true" /></a>
-              <a href="https://github.com/EnmaSantos/vibematch" target="_blank" rel="noreferrer">View source code <ArrowUpRight size={16} aria-hidden="true" /></a>
-            </div>
-          </div>
-        </section>
-
+        <section className="content-section projects-section" id="projects" aria-labelledby="projects-title"><div className="section-intro section-intro-wide"><div><span className="section-number">02 / SELECTED WORK</span><h2 id="projects-title">Software with a purpose.</h2></div><p>Three projects that show interface design, complete application flows, and technical decisions. Each example separates what is implemented from what is still a prototype or needs further verification.</p></div><div className="projects-list">{projects.map((project) => <Fragment key={project.name}><ProjectCard project={project} />{project.name === 'VibeMatch' && <VibeMatchCaseStudy />}</Fragment>)}</div><div className="more-work"><span>MORE WORK TO EXPLORE</span><a href="https://github.com/EnmaSantos/CoachLens" target="_blank" rel="noreferrer">CoachLens <small>Sanitized coaching platform source</small><ArrowUpRight size={16} /></a><a href="https://github.com/EnmaSantos/data-referee" target="_blank" rel="noreferrer">Data Referee <small>Event data quality pipeline</small><ArrowUpRight size={16} /></a></div></section>
         <section className="content-section experience-section" id="experience" aria-labelledby="experience-title"><div className="section-intro section-intro-wide"><div><span className="section-number">03 / EXPERIENCE</span><h2 id="experience-title">Built for real workflows.</h2></div><p>Work in academic operations and a volunteer team, with scope and ownership stated separately.</p></div><div className="experience-grid"><article className="experience-primary"><div className="role-line"><div><span className="role-type">CURRENT ROLE</span><h3>Development Specialist</h3><p>Brigham Young University–Idaho</p></div><span>JAN 2026 – PRESENT</span></div><div className="work-streams"><div><span>01</span><div><h4>Course provisioning</h4><p>Automated setup and review workflows for approximately 375 online courses per semester, generating Trello work for 25 staff members.</p></div></div><div><span>02</span><div><h4>Academic coaching</h4><p>Designed and deployed Canvas-integrated dashboards and audits. The production Coaching Audits platform supports 70+ coaches and 1,500+ students; its <a href="https://github.com/EnmaSantos/CoachLens" target="_blank" rel="noreferrer">public CoachLens mirror</a> uses sanitized data.</p></div></div><div><span>03</span><div><h4>Application delivery</h4><p>Developed React and C# features for an internal inventory and balance-management app, collaborating with a senior developer on architecture, review, and GitHub Actions/Nginx deployment.</p></div></div></div></article><article className="experience-secondary"><span className="role-type">VOLUNTEER / TEAM PROJECT</span><h3>Volunteer Software Analyst</h3><p className="organization">Madison Fire Department <span>APR – JUL 2024</span></p><p>Contributed to an equipment inventory system for 200+ assets. Helped design SQLite records, status tracking, and replacement alerts for 10+ personnel, and reviewed SQL scripts and pull requests with the team.</p></article></div></section>
         <section className="content-section approach-section" id="approach" aria-labelledby="approach-title"><div className="section-intro"><span className="section-number">04 / ENGINEERING APPROACH</span><h2 id="approach-title">Make it work. Understand why.</h2></div><div className="approach-grid"><div className="approach-lead"><p>My recent work connects user-facing flows to APIs and persistence. I check behavior at the boundaries where dates, imports, and browser devices can fail.</p><a href="https://github.com/EnmaSantos/vitality_vista/commit/cd2d78a8ff43dc2c3d8588f0147269a0a4d6680a" target="_blank" rel="noreferrer">See a date-handling correction <ArrowUpRight size={16} /></a></div><div className="approach-details"><div><span>01 / DEBUG</span><p>A VitalityVista change corrected local-date handling across food logging, daily calorie requests, and SQL date comparisons. The linked commit shows the change across those layers.</p></div><div><span>02 / VERIFY</span><p>Its test files exercise barcode camera startup, timeout and cleanup, plus health-import validation. I also review generated code and collaborate through code review in professional work.</p></div></div></div></section>
         <section className="content-section skills-section" id="skills" aria-labelledby="skills-title"><div className="section-intro section-intro-wide"><div><span className="section-number">05 / SKILLS</span><h2 id="skills-title">Tools I use to build.</h2></div><p>A focused inventory drawn from the projects and work above.</p></div><div className="skills-grid">{skills.map((group) => <div className="skill-group" key={group.title}><h3>{group.title}</h3><p>{group.items}</p></div>)}</div></section>
