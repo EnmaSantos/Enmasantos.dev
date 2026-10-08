@@ -65,9 +65,9 @@ h1 em{color:var(--accent);font-style:normal}
 .project-case-heading p{max-width:510px;margin:0;color:var(--muted);font-size:.96rem;line-height:1.75}
 .design-frame-rail{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));min-width:0;gap:.8rem;margin:2.5rem 0}
 .design-frame{min-width:0;margin:0;border:1px solid var(--line-strong);background:var(--bg)}
-.design-frame a{display:grid;place-items:center;height:325px;padding:.65rem;background:radial-gradient(circle at 50% 35%,rgba(91,224,182,.08),transparent 65%),#172120}
+.design-frame a{display:grid;place-items:center;height:325px;min-height:0;padding:.65rem;overflow:hidden;background:radial-gradient(circle at 50% 35%,rgba(91,224,182,.08),transparent 65%),#172120}
 .design-frame a:hover,.design-frame a:focus-visible{background:#20312d}
-.design-frame img{display:block;width:100%;height:100%;object-fit:contain;border-radius:12px;filter:drop-shadow(0 10px 16px rgba(0,0,0,.3))}
+.design-frame img{display:block;width:100%;height:100%;min-width:0;min-height:0;object-fit:contain;border-radius:12px;filter:drop-shadow(0 10px 16px rgba(0,0,0,.3))}
 .design-frame figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.3rem;padding:.8rem .9rem;border-top:1px solid var(--line);color:var(--heading);font:600 .65rem var(--mono);letter-spacing:.04em;text-transform:uppercase}
 .design-frame figcaption span{color:var(--faint);font-weight:500}
 .design-decisions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong)}
