@@ -1,8 +1,8 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import {
   ArrowDownRight, ArrowRight, ArrowUpRight, BriefcaseBusiness, CheckCircle2,
-  Code2, Download, GitPullRequest, Heart, Layers3, Link2, Mail, Sparkles,
-  Terminal, TestTube2,
+  ChevronLeft, ChevronRight, Code2, Download, GitPullRequest, Heart, Layers3,
+  Link2, Mail, Sparkles, Terminal, TestTube2, X,
 } from 'lucide-react'
 import './App.css'
 
@@ -145,46 +145,120 @@ const vibeDesignFrames = [
 ]
 
 function VibeMatchCaseStudy() {
+  const [activeFrameIndex, setActiveFrameIndex] = useState<number | null>(null)
+  const activeFrame = activeFrameIndex === null ? null : vibeDesignFrames[activeFrameIndex]
+
+  useEffect(() => {
+    if (activeFrameIndex === null) return
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setActiveFrameIndex(null)
+      if (event.key === 'ArrowLeft') {
+        setActiveFrameIndex((current) => current === null ? null : (current - 1 + vibeDesignFrames.length) % vibeDesignFrames.length)
+      }
+      if (event.key === 'ArrowRight') {
+        setActiveFrameIndex((current) => current === null ? null : (current + 1) % vibeDesignFrames.length)
+      }
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [activeFrameIndex])
+
   return (
-    <article className="project-case-study" id="vibematch-case-study" aria-labelledby="vibematch-case-title">
-      <div className="project-case-heading">
-        <div>
-          <span className="section-number">02 / VIBEMATCH DESIGN DETAIL</span>
-          <h3 id="vibematch-case-title">Designing a clearer movie choice.</h3>
+    <>
+      <article className="project-case-study" id="vibematch-case-study" aria-labelledby="vibematch-case-title">
+        <div className="project-case-heading">
+          <div>
+            <span className="section-number">02 / VIBEMATCH DESIGN DETAIL</span>
+            <h3 id="vibematch-case-title">Designing a clearer movie choice.</h3>
+          </div>
+          <p>
+            I shaped the visual direction through ongoing discussions and a mobile-first Figma pass,
+            then built the responsive interaction. These frames show the first design direction;
+            the implemented interface evolved during development.
+          </p>
         </div>
-        <p>
-          I shaped the visual direction through ongoing discussions and a mobile-first Figma pass,
-          then built the responsive interaction. These frames show the first design direction;
-          the implemented interface evolved during development.
-        </p>
-      </div>
 
-      <div className="design-frame-rail" aria-label="VibeMatch first Figma design pass">
-        {vibeDesignFrames.map((frame) => (
-          <figure className="design-frame" key={frame.image}>
-            <a href={frame.image} target="_blank" rel="noreferrer" aria-label={`View full-size ${frame.label} concept`}>
-              <img src={frame.image} alt={frame.alt} loading="lazy" />
-            </a>
-            <figcaption>{frame.label}<span>Early Figma concept</span></figcaption>
-          </figure>
-        ))}
-      </div>
-
-      <div className="design-decisions">
-        <div><span>01 / Frame</span><h4>Show the preferences.</h4><p>The first design pass made the vibe check skippable and kept the active filters visible. The app now supports mood, genre, runtime, release-age, and animation preferences.</p></div>
-        <div><span>02 / Decide</span><h4>Make each action clear.</h4><p>Poster-first cards pair explicit Like and Skip buttons with movie details. The implemented deck also supports pointer dragging and keyboard access to details.</p></div>
-        <div><span>03 / Resolve</span><h4>Surface the shared yes.</h4><p>The result concept places shared likes ahead of near matches, so the pair can compare the strongest options first.</p></div>
-      </div>
-
-      <div className="design-case-footer">
-        <p><strong>Next step:</strong> Observe people using the flow and revise it from their feedback. Formal user interviews and usability testing have not been conducted yet.</p>
-        <div className="design-case-links">
-          <a href="https://www.figma.com/design/kJktYujehpxaF0fxFif8ia" target="_blank" rel="noreferrer">Figma design <ArrowUpRight size={16} /></a>
-          <a href="https://vibematch.enmasantos.dev/" target="_blank" rel="noreferrer">Live app <ArrowUpRight size={16} /></a>
-          <a href="https://github.com/EnmaSantos/vibematch" target="_blank" rel="noreferrer">Source code <ArrowUpRight size={16} /></a>
+        <div className="design-frame-rail" aria-label="VibeMatch first Figma design pass">
+          {vibeDesignFrames.map((frame, index) => (
+            <figure className="design-frame" key={frame.image}>
+              <button
+                className="design-frame-trigger"
+                type="button"
+                onClick={() => setActiveFrameIndex(index)}
+                aria-label={`Open ${frame.label} concept in image carousel`}
+              >
+                <img src={frame.image} alt={frame.alt} loading="lazy" />
+              </button>
+              <figcaption>{frame.label}<span>Early Figma concept</span></figcaption>
+            </figure>
+          ))}
         </div>
-      </div>
-    </article>
+
+        <div className="design-decisions">
+          <div><span>01 / Frame</span><h4>Show the preferences.</h4><p>The first design pass made the vibe check skippable and kept the active filters visible. The app now supports mood, genre, runtime, release-age, and animation preferences.</p></div>
+          <div><span>02 / Decide</span><h4>Make each action clear.</h4><p>Poster-first cards pair explicit Like and Skip buttons with movie details. The implemented deck also supports pointer dragging and keyboard access to details.</p></div>
+          <div><span>03 / Resolve</span><h4>Surface the shared yes.</h4><p>The result concept places shared likes ahead of near matches, so the pair can compare the strongest options first.</p></div>
+        </div>
+
+        <div className="design-case-footer">
+          <p><strong>Next step:</strong> Observe people using the flow and revise it from their feedback. Formal user interviews and usability testing have not been conducted yet.</p>
+          <div className="design-case-links">
+            <a href="https://www.figma.com/design/kJktYujehpxaF0fxFif8ia" target="_blank" rel="noreferrer">Figma design <ArrowUpRight size={16} /></a>
+            <a href="https://vibematch.enmasantos.dev/" target="_blank" rel="noreferrer">Live app <ArrowUpRight size={16} /></a>
+            <a href="https://github.com/EnmaSantos/vibematch" target="_blank" rel="noreferrer">Source code <ArrowUpRight size={16} /></a>
+          </div>
+        </div>
+      </article>
+
+      {activeFrame && activeFrameIndex !== null && (
+        <div
+          className="image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="image-lightbox-title"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setActiveFrameIndex(null)
+          }}
+        >
+          <div className="image-lightbox-content">
+            <button className="image-lightbox-close" type="button" onClick={() => setActiveFrameIndex(null)} aria-label="Close image carousel">
+              <X size={20} />
+            </button>
+            <button
+              className="image-lightbox-nav"
+              type="button"
+              onClick={() => setActiveFrameIndex((activeFrameIndex - 1 + vibeDesignFrames.length) % vibeDesignFrames.length)}
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={28} />
+            </button>
+            <figure className="image-lightbox-figure">
+              <img src={activeFrame.image} alt={activeFrame.alt} />
+              <figcaption id="image-lightbox-title">
+                <span>{activeFrame.label}</span>
+                <span>{activeFrameIndex + 1} / {vibeDesignFrames.length}</span>
+              </figcaption>
+            </figure>
+            <button
+              className="image-lightbox-nav"
+              type="button"
+              onClick={() => setActiveFrameIndex((activeFrameIndex + 1) % vibeDesignFrames.length)}
+              aria-label="Next image"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
