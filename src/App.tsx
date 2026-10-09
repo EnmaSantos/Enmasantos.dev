@@ -277,7 +277,7 @@ function App() {
             <p className="eyebrow"><span className="eyebrow-dot" /> SOFTWARE ENGINEERING / WEB APPLICATIONS</p>
             <h1 id="hero-title">I build web apps that make <em>complex work</em> easier.</h1>
             <p className="hero-text">I work across interfaces, application logic, APIs, and databases to turn everyday workflows into useful software. Recent work spans health tracking, collaborative movie discovery, and academic operations.</p>
-            <div className="hero-actions"><a className="button-primary" href="#projects">Explore selected work<ArrowDownRight size={18} /></a><a className="button-secondary" href="mailto:del20047@byui.edu">Get in touch<ArrowUpRight size={17} /></a></div>
+            <div className="hero-actions"><a className="button-primary" href="#projects">Explore selected work<ArrowDownRight size={18} /></a><a className="button-secondary" href="/contact/">Get in touch<ArrowUpRight size={17} /></a></div>
           </div>
           <aside className="profile-panel" aria-label="About Enmanuel">
             <div className="profile-head"><span>PROFILE / 2026</span><span className="online-indicator"><span /> OPEN TO OPPORTUNITIES</span></div>
